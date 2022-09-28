@@ -1,23 +1,18 @@
-const { Model, DataTypes, Sequelize } = require('sequelize');
+const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 
-class Comment extends Model {
-  checkPassword(loginPw) {
-    return bcrypt.compareSync(loginPw, this.password);
-  }
+class Comment extends Model {};
 
-}
-
-Post.init(
+Comment.init(
   {
     id: {
-      type: Sequelize.INTEGER,
+      type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
       autoIncrement: true,
     },
-    content: {
-      type: Sequelize.TEXT,
+    commentary: {
+      type: DataTypes.TEXT,
       allowNull: false
     },
 
@@ -25,7 +20,7 @@ Post.init(
       type: Sequelize.INTEGER,
       allowNull: false,
       reference: {
-        model: 'Post',
+        model: 'post',
         key: 'id'
       }
     },
@@ -37,6 +32,12 @@ Post.init(
         model: 'User',
         key: 'id'
       }
+    },
+
+    date_created: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: DataTypes.NOW
     }
   },
   {
@@ -44,8 +45,7 @@ Post.init(
     timestamps: false,
     freezeTableName: true,
     underscored: true,
-    modelName: 'posts',
-    underscored: true
+    modelName: 'comment',
   }
 );
 
